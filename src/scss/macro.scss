@@ -1,0 +1,21 @@
+.macro-row {
+	display: flex;
+	justify-content: center;
+	flex-direction: row;
+
+	.macro-option {
+		padding: 1rem;
+	}
+
+	.macro-button {
+		height: min-content;
+		align-self: center;
+	}
+}
+
+.macro-input-container {
+	padding: 1rem;
+	.macro-input {
+		width: 5rem;
+	}
+}

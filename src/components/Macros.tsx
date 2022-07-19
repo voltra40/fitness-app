@@ -1,39 +1,66 @@
 import React, {useEffect, useState} from "react"
-import axios from "axios"
-
-type Meal = {
-	id: number
-	meal: string
-	calories: number
-	fat: number
-	carbs: number
-	protein: number
-	date: any
-}
+import axios, {AxiosError} from "axios"
+import "../scss/macro.scss"
+import {Macro, MacroNoId} from "../types"
+import {Constants} from "../constants"
+import MacroEntry from "./MacroEntry"
 
 const Macros = () => {
-	const [loading, setLoading] = useState(true)
-	const [macros, setMacros] = useState<Meal[] | null>(null)
-	const API_ENDPOINT = "http://localhost:8080/macro"
+	const [loading, setLoading] = useState<boolean>(true)
+	const [macros, setMacros] = useState<Macro[] | null>(null)
 
 	useEffect(() => {
-		getMacros(API_ENDPOINT)
+		getMacros()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
-	const getMacros = (url: string) => {
-		axios.get(url).then((res) => {
+	useEffect(() => {
+		setLoading(false)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [macros])
+
+	const getMacros = () => {
+		axios.get(Constants.API_ENDPOINT).then((res) => {
 			setMacros(res.data)
-			setLoading(false)
 			console.log("macros:", macros)
 		})
+	}
+
+	const deleteMeal = (macroId: number) => {
+		axios
+			.delete(Constants.API_ENDPOINT, {params: {id: macroId}})
+			.then(() => {
+				getMacros()
+			})
+			.catch((err: AxiosError) => {
+				console.log(err)
+			})
+	}
+
+	const updateMacro = (macroId: number, newValues: MacroNoId) => {
+		// check if values are the same
+		axios
+			.put(Constants.API_ENDPOINT + "?id=" + macroId, newValues, {
+				headers: {"Content-Type": "application/json"},
+			})
+			.then(() => {
+				getMacros()
+			})
+			.catch((err: AxiosError) => {
+				console.log(err)
+			})
 	}
 
 	if (loading) return <div> loading </div>
 	return (
 		<div>
-			{macros?.map((macro, index) => (
-				<div key={index}> {macro.meal} </div>
+			{macros?.map((macro) => (
+				<MacroEntry
+					key={macro.id}
+					macro={macro}
+					updateMacro={updateMacro}
+					deleteMeal={deleteMeal}
+				/>
 			))}
 		</div>
 	)

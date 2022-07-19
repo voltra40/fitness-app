@@ -1,12 +1,14 @@
 import React from "react"
-import "./App.css"
+import {MacroContextProvider} from "./context/MacroContext"
+import AddMacroForm from "./components/AddMacroForm"
 import Macros from "./components/Macros"
 
 function App() {
 	return (
-		<div className="App">
+		<MacroContextProvider>
+			<AddMacroForm />
 			<Macros />
-		</div>
+		</MacroContextProvider>
 	)
 }
 
