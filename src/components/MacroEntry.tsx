@@ -1,20 +1,11 @@
-import React, {useState, useEffect, useRef} from "react"
+import React, {useState} from "react"
+import {Macro} from "../types"
 import "../scss/macro.scss"
-import {Macro, MacroNoId} from "../types"
 
 interface MacroProps {
 	macro: Macro
-	updateMacro: (macroId: number, newValues: MacroNoId) => void
+	updateMeal: (macroId: number, newValues: any) => void
 	deleteMeal: (macroId: number) => void
-}
-
-const newValues: MacroNoId = {
-	meal: "testing",
-	calories: 999,
-	fat: 100,
-	carbs: 123,
-	protein: 55,
-	date: null,
 }
 
 type SelectedMacro = {
@@ -22,69 +13,160 @@ type SelectedMacro = {
 	macro: string
 }
 
-const defaultValue: SelectedMacro = {id: 0, macro: ""}
-
-const MacroEntry: React.FC<MacroProps> = ({macro, updateMacro, deleteMeal}) => {
-	const box = useRef(null)
-	useOutsideAlerter(box)
-	const [selected, setSelected] = useState<SelectedMacro>(defaultValue)
-
-	function useOutsideAlerter(ref: any) {
-		useEffect(() => {
-			// Function for click event
-			function handleOutsideClick(event: {target: any}) {
-				if (
-					ref.current &&
-					!ref.current.contains(event.target) &&
-					selected !== defaultValue
-				) {
-					console.log("you just clicked outside of box!")
-					setSelected(defaultValue)
-					console.log("selected:", selected)
-				}
-			}
-
-			// Adding click event listener
-			document.addEventListener("click", handleOutsideClick)
-			return () => document.removeEventListener("click", handleOutsideClick)
-		}, [ref])
-	}
+const MacroEntry: React.FC<MacroProps> = ({macro, updateMeal, deleteMeal}) => {
+	const [selected, setSelected] = useState<SelectedMacro | null>(null)
+	const [updateMacroPair, setUpdateMacroPair] = useState<{}>({})
 
 	return (
-		<div className="macro-row" ref={box} key={macro.id}>
-			<div ref={box}>
-				{selected.id === macro.id && selected.macro === "meal" ? (
-					<input name="meal" type="text" className="macro-option"></input>
+		<div className="macro-row" key={macro.id}>
+			<div className="macro-option">
+				{selected?.id === macro.id && selected?.macro === "meal" ? (
+					<div className="edit-input-container">
+						<input
+							name="meal"
+							type="text"
+							className="edit-input"
+							placeholder={macro.meal}
+							onChange={(e) => setUpdateMacroPair({meal: e.target.value})}
+						></input>
+					</div>
 				) : (
-					<div
-						className="macro-option"
-						onClick={() => setSelected({id: macro.id, macro: "meal"})}
-					>
+					<div onClick={() => setSelected({id: macro.id, macro: "meal"})}>
 						{macro.meal}
 					</div>
 				)}
 			</div>
+			<div className="macro-option">
+				{selected?.id === macro.id && selected?.macro === "calories" ? (
+					<div className="edit-input-container">
+						<input
+							name="calories"
+							type="number"
+							className="edit-input"
+							placeholder={macro.calories.toString()}
+							onChange={(e) =>
+								setUpdateMacroPair({
+									meal: macro.meal,
+									calories: e.target.valueAsNumber,
+								})
+							}
+						></input>
+					</div>
+				) : (
+					<div onClick={() => setSelected({id: macro.id, macro: "calories"})}>
+						{macro.calories}
+					</div>
+				)}
+			</div>
+			<div className="macro-option">
+				{selected?.id === macro.id && selected?.macro === "fat" ? (
+					<div className="edit-input-container">
+						<input
+							name="fat"
+							type="number"
+							className="edit-input"
+							placeholder={macro.fat.toString()}
+							onChange={(e) =>
+								setUpdateMacroPair({
+									meal: macro.meal,
+									fat: e.target.valueAsNumber,
+								})
+							}
+						></input>
+					</div>
+				) : (
+					<div onClick={() => setSelected({id: macro.id, macro: "fat"})}>
+						{macro.fat}
+					</div>
+				)}
+			</div>
+			<div className="macro-option">
+				{selected?.id === macro.id && selected?.macro === "carbs" ? (
+					<div className="edit-input-container">
+						<input
+							name="carbs"
+							type="number"
+							className="edit-input"
+							placeholder={macro.carbs.toString()}
+							onChange={(e) =>
+								setUpdateMacroPair({
+									meal: macro.meal,
+									carbs: e.target.valueAsNumber,
+								})
+							}
+						></input>
+					</div>
+				) : (
+					<div onClick={() => setSelected({id: macro.id, macro: "carbs"})}>
+						{macro.carbs}
+					</div>
+				)}
+			</div>
+			<div className="macro-option">
+				{selected?.id === macro.id && selected?.macro === "protein" ? (
+					<div className="edit-input-container">
+						<input
+							name="protein"
+							type="number"
+							className="edit-input"
+							placeholder={macro.protein.toString()}
+							onChange={(e) =>
+								setUpdateMacroPair({
+									meal: macro.meal,
+									protein: e.target.valueAsNumber,
+								})
+							}
+						></input>
+					</div>
+				) : (
+					<div onClick={() => setSelected({id: macro.id, macro: "protein"})}>
+						{macro.protein}
+					</div>
+				)}
+			</div>
+			<div className="macro-option">
+				{selected?.id === macro.id && selected?.macro === "date" ? (
+					<div className="edit-input-container">
+						<input
+							name="date"
+							type="text"
+							className="edit-input"
+							placeholder={macro.date}
+							onChange={(e) =>
+								setUpdateMacroPair({
+									meal: macro.meal,
+									date: e.target.value,
+								})
+							}
+						></input>
+					</div>
+				) : (
+					<div onClick={() => setSelected({id: macro.id, macro: "date"})}>
+						{macro.date}
+					</div>
+				)}
+			</div>
 
-			<div className="macro-option">{macro.calories}</div>
-			<div className="macro-option">{macro.fat}</div>
-			<div className="macro-option">{macro.carbs}</div>
-			<div className="macro-option">{macro.protein}</div>
-			<div className="macro-option">{macro.date}</div>
-			<button
-				className="macro-button"
-				type="button"
-				onClick={() => deleteMeal(macro.id)}
-			>
-				delete
-			</button>
-			<button
-				className="macro-button"
-				type="button"
-				// onClick={() => updateMacro(macro.id, newValues)}
-				onClick={() => setSelected(defaultValue)}
-			>
-				update
-			</button>
+			{selected == null ? (
+				<button
+					className="macro-button"
+					type="button"
+					onClick={() => deleteMeal(macro.id)}
+				>
+					delete
+				</button>
+			) : (
+				<button
+					className="macro-button"
+					type="button"
+					onClick={() => {
+						updateMeal(macro.id, updateMacroPair)
+						setSelected(null)
+					}}
+				>
+					update
+				</button>
+			)}
 		</div>
 	)
 }

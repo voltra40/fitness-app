@@ -1,0 +1,23 @@
+.macro-page-layout {
+	flex-direction: column;
+
+	.today-container {
+		display: flex;
+
+		h1 {
+			font-size: x-large;
+		}
+	}
+
+	.yesterday-container {
+		display: flex;
+
+		h1 {
+			font-size: x-large;
+		}
+	}
+
+	.more-container {
+		display: flex;
+	}
+}

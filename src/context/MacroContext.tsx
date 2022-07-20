@@ -18,17 +18,6 @@ export const MacroContextProvider: React.FC<MacroContextProviderProps> = ({
 }) => {
 	const [loading, setLoading] = useState<boolean>(true)
 
-	// const deleteMacro = (macroId: number) => {
-	// 	axios
-	// 		.delete(Constants.API_ENDPOINT, {params: {id: macroId}})
-	// 		.then(() => {
-	// 			getMacros()
-	// 		})
-	// 		.catch((err: AxiosError) => {
-	// 			console.log(err)
-	// 		})
-	// }
-
 	return (
 		<MacroContext.Provider value={{loading}}>{children}</MacroContext.Provider>
 	)

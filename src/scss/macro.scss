@@ -1,10 +1,12 @@
+$spacing: 1rem;
+
 .macro-row {
 	display: flex;
 	justify-content: center;
 	flex-direction: row;
 
 	.macro-option {
-		padding: 1rem;
+		padding: $spacing;
 	}
 
 	.macro-button {
@@ -14,8 +16,19 @@
 }
 
 .macro-input-container {
-	padding: 1rem;
+	padding: $spacing;
+
 	.macro-input {
+		align-self: center;
+		width: 5rem;
+	}
+}
+
+.edit-input-container {
+	display: flex;
+	align-self: center;
+
+	.edit-input {
 		width: 5rem;
 	}
 }

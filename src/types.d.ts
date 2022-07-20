@@ -5,7 +5,7 @@ export interface Macro {
 	fat: number
 	carbs: number
 	protein: number
-	date: any
+	date: string
 }
 
 export interface MacroNoId {
@@ -14,5 +14,5 @@ export interface MacroNoId {
 	fat: number
 	carbs: number
 	protein: number
-	date: string | null
+	date?: string
 }

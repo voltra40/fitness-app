@@ -1,53 +1,47 @@
-import axios, {AxiosError} from "axios"
-import React, {useEffect, useState} from "react"
+import React, {useState} from "react"
+import {MacroNoId} from "../types"
 import "../scss/macro.scss"
-import {Constants} from "../constants"
 
-const AddMacroForm = () => {
-	const [loading, setLoading] = useState<boolean>(true)
-	const [meal, setMeal] = useState<string>("")
-	const [calories, setCalories] = useState<string>("")
-	const [fat, setFat] = useState<string>("")
-	const [carbs, setCarbs] = useState<string>("")
-	const [protein, setProtein] = useState<string>("")
-	const [date, setDate] = useState<string>("")
+interface AddMacroFormProps {
+	addMeal: (macroNoId: MacroNoId) => void
+}
 
-	useEffect(() => {})
+const emptyMeal: MacroNoId = {
+	meal: "",
+	calories: 0,
+	fat: 0,
+	carbs: 0,
+	protein: 0,
+	date: undefined,
+}
+
+const AddMacroForm: React.FC<AddMacroFormProps> = ({addMeal}) => {
+	const [meal, setMeal] = useState<MacroNoId>(emptyMeal)
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		addMeal()
-		console.log("submit")
+		addMeal(meal)
 	}
 
-	const addMeal = () => {
-		if (meal !== "") {
-			axios
-				.post(Constants.API_ENDPOINT, {
-					meal: meal,
-					calories: calories,
-					fat: fat,
-					carbs: carbs,
-					protein: protein,
-				})
-				.then(() => {
-					window.location.reload()
-				})
-				.catch((err: AxiosError) => {
-					console.log(err)
-				})
+	const handleDateOnChange = (date: string) => {
+		if (date === "") {
+			setMeal(Object.assign(meal, {date: undefined}))
+		} else {
+			setMeal(Object.assign(meal, {date: date}))
 		}
 	}
 
 	return (
 		<div>
-			<form className="" onSubmit={(e) => handleSubmit(e)}>
+			<form id="macro_input_form" onSubmit={(e) => handleSubmit(e)}>
 				<label className="macro-input-container">
 					Meal
 					<input
 						name="meal"
 						type="text"
-						onChange={(e) => setMeal(e.target.value)}
+						onChange={(e) =>
+							setMeal(Object.assign(meal, {meal: e.target.value}))
+						}
 						className="macro-input"
 					></input>
 				</label>
@@ -55,8 +49,12 @@ const AddMacroForm = () => {
 					Calories
 					<input
 						name="calories"
-						type="text"
-						onChange={(e) => setCalories(e.target.value)}
+						type="number"
+						step="any"
+						min="0"
+						onChange={(e) =>
+							setMeal(Object.assign(meal, {calories: e.target.valueAsNumber}))
+						}
 						className="macro-input"
 					></input>
 				</label>
@@ -64,8 +62,12 @@ const AddMacroForm = () => {
 					Fat
 					<input
 						name="fat"
-						type="text"
-						onChange={(e) => setFat(e.target.value)}
+						type="number"
+						step="any"
+						min="0"
+						onChange={(e) =>
+							setMeal(Object.assign(meal, {fat: e.target.valueAsNumber}))
+						}
 						className="macro-input"
 					></input>
 				</label>
@@ -73,8 +75,12 @@ const AddMacroForm = () => {
 					Carbs
 					<input
 						name="carbs"
-						type="text"
-						onChange={(e) => setCarbs(e.target.value)}
+						type="number"
+						step="any"
+						min="0"
+						onChange={(e) =>
+							setMeal(Object.assign(meal, {carbs: e.target.valueAsNumber}))
+						}
 						className="macro-input"
 					></input>
 				</label>
@@ -82,8 +88,12 @@ const AddMacroForm = () => {
 					Protein
 					<input
 						name="protein"
-						type="text"
-						onChange={(e) => setProtein(e.target.value)}
+						type="number"
+						step="any"
+						min="0"
+						onChange={(e) =>
+							setMeal(Object.assign(meal, {protein: e.target.valueAsNumber}))
+						}
 						className="macro-input"
 					></input>
 				</label>
@@ -92,7 +102,7 @@ const AddMacroForm = () => {
 					<input
 						name="date"
 						type="text"
-						onChange={(e) => setDate(e.target.value)}
+						onChange={(e) => handleDateOnChange(e.target.value)}
 						className="macro-input"
 					></input>
 				</label>
