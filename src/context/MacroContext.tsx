@@ -1,9 +1,14 @@
-import axios, {AxiosError} from "axios"
-import React, {createContext, useContext, useState} from "react"
-import {Constants} from "../constants"
+import React, {createContext, useContext} from "react"
+import useMacros from "../hooks/useMacros"
+import {Macro, MacroNoId} from "../types"
 
 interface MacroContextInterface {
+	macros: Macro[]
 	loading: boolean
+	error: boolean
+	addMeal: (macro: MacroNoId) => void
+	deleteMeal: (macro: number) => void
+	updateMeal: (macroId: number, newValues: {}) => void
 }
 const MacroContext = createContext<MacroContextInterface>(
 	{} as MacroContextInterface
@@ -16,10 +21,14 @@ interface MacroContextProviderProps {
 export const MacroContextProvider: React.FC<MacroContextProviderProps> = ({
 	children,
 }) => {
-	const [loading, setLoading] = useState<boolean>(true)
+	const {macros, loading, error, addMeal, updateMeal, deleteMeal} = useMacros()
 
 	return (
-		<MacroContext.Provider value={{loading}}>{children}</MacroContext.Provider>
+		<MacroContext.Provider
+			value={{macros, loading, error, addMeal, deleteMeal, updateMeal}}
+		>
+			{children}
+		</MacroContext.Provider>
 	)
 }
 

@@ -1,6 +1,7 @@
 import React, {useState} from "react"
 import {MacroNoId} from "../types"
 import "../scss/macro.scss"
+import {useMacroContext} from "../context/MacroContext"
 
 interface AddMacroFormProps {
 	addMeal: (macroNoId: MacroNoId) => void
@@ -15,7 +16,8 @@ const emptyMeal: MacroNoId = {
 	date: undefined,
 }
 
-const AddMacroForm: React.FC<AddMacroFormProps> = ({addMeal}) => {
+const AddMacroForm = () => {
+	const {addMeal} = useMacroContext()
 	const [meal, setMeal] = useState<MacroNoId>(emptyMeal)
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

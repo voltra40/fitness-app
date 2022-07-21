@@ -66,7 +66,16 @@ const useMacros = () => {
 		}
 	}
 
-	return {macros, loading, error, addMeal, deleteMeal, updateMeal}
+	return {
+		macros,
+		loading,
+		setLoading,
+		error,
+		setError,
+		addMeal,
+		deleteMeal,
+		updateMeal,
+	}
 }
 
 export default useMacros

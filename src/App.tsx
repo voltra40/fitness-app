@@ -2,7 +2,11 @@ import {MacroContextProvider} from "./context/MacroContext"
 import Macros from "./components/Macros"
 
 function App() {
-	return <Macros />
+	return (
+		<MacroContextProvider>
+			<Macros />
+		</MacroContextProvider>
+	)
 }
 
 export default App

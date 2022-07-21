@@ -1,11 +1,10 @@
 import React, {useState} from "react"
 import {Macro} from "../types"
 import "../scss/macro.scss"
+import {useMacroContext} from "../context/MacroContext"
 
 interface MacroProps {
 	macro: Macro
-	updateMeal: (macroId: number, newValues: any) => void
-	deleteMeal: (macroId: number) => void
 }
 
 type SelectedMacro = {
@@ -13,9 +12,11 @@ type SelectedMacro = {
 	macro: string
 }
 
-const MacroEntry: React.FC<MacroProps> = ({macro, updateMeal, deleteMeal}) => {
+const MacroEntry: React.FC<MacroProps> = ({macro}) => {
 	const [selected, setSelected] = useState<SelectedMacro | null>(null)
 	const [updateMacroPair, setUpdateMacroPair] = useState<{}>({})
+
+	const {updateMeal, deleteMeal} = useMacroContext()
 
 	return (
 		<div className="macro-row" key={macro.id}>
