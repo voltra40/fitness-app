@@ -50,7 +50,7 @@ const useMacros = () => {
 			})
 	}
 
-	const updateMeal = (macroId: number, newValues: {}) => {
+	const updateMeal = (macroId: number, newValues: Record<string, unknown>) => {
 		// check if values are the same
 		if (Object.keys(newValues).length !== 0) {
 			axios

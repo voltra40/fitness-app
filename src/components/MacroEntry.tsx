@@ -14,7 +14,9 @@ type SelectedMacro = {
 
 const MacroEntry: React.FC<MacroProps> = ({macro}) => {
 	const [selected, setSelected] = useState<SelectedMacro | null>(null)
-	const [updateMacroPair, setUpdateMacroPair] = useState<{}>({})
+	const [updateMacroPair, setUpdateMacroPair] = useState<
+		Record<string, unknown>
+	>({})
 
 	const {updateMeal, deleteMeal} = useMacroContext()
 

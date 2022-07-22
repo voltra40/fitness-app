@@ -3,10 +3,6 @@ import {MacroNoId} from "../types"
 import "../scss/macro.scss"
 import {useMacroContext} from "../context/MacroContext"
 
-interface AddMacroFormProps {
-	addMeal: (macroNoId: MacroNoId) => void
-}
-
 const emptyMeal: MacroNoId = {
 	meal: "",
 	calories: 0,

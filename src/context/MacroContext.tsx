@@ -8,7 +8,7 @@ interface MacroContextInterface {
 	error: boolean
 	addMeal: (macro: MacroNoId) => void
 	deleteMeal: (macro: number) => void
-	updateMeal: (macroId: number, newValues: {}) => void
+	updateMeal: (macroId: number, newValues: Record<string, unknown>) => void
 }
 const MacroContext = createContext<MacroContextInterface>(
 	{} as MacroContextInterface
