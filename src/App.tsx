@@ -1,10 +1,10 @@
 import {MacroContextProvider} from "./context/MacroContext"
-import Macros from "./components/Macros"
+import MacroPageLayout from "./layout/MacroPageLayout"
 
 function App() {
 	return (
 		<MacroContextProvider>
-			<Macros />
+			<MacroPageLayout />
 		</MacroContextProvider>
 	)
 }

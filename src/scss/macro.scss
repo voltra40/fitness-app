@@ -4,9 +4,22 @@ $spacing: 1rem;
 	display: flex;
 	justify-content: center;
 	flex-direction: row;
+	width: fit-content;
+	margin-bottom: 1rem;
+
+	.macro-meal {
+		font-size: x-large;
+		font-weight: 600;
+	}
 
 	.macro-option {
-		padding: $spacing;
+		padding-left: 1rem;
+		padding-right: 1rem;
+		align-self: center;
+
+		p {
+			justify-content: center;
+		}
 	}
 
 	.macro-button {

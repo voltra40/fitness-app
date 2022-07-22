@@ -32,7 +32,10 @@ const MacroEntry: React.FC<MacroProps> = ({macro}) => {
 						></input>
 					</div>
 				) : (
-					<div onClick={() => setSelected({id: macro.id, macro: "meal"})}>
+					<div
+						className="macro-meal"
+						onClick={() => setSelected({id: macro.id, macro: "meal"})}
+					>
 						{macro.meal}
 					</div>
 				)}
